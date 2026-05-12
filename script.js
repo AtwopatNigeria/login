@@ -1,14 +1,11 @@
 const formValidators = {
     email: (value) => {
         if (!value) return { isValid: false, message: 'Email address is required' };
-        
-        // Standard email regex (allows gmail, outlook, etc.)
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
             return { isValid: false, message: 'Please enter a valid email address' };
         }
-        
-        // Restriction for personal domains (gmail, yahoo, etc.) has been removed
+        // Email restriction for Gmail/Yahoo/Outlook has been fully removed
         return { isValid: true };
     },
     password: (value) => {
@@ -21,7 +18,7 @@ const formValidators = {
         const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
         
         if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecial) {
-            return { isValid: false, message: 'Password must contain uppercase, lowercase, number, and special character' };
+            return { isValid: false, message: 'Required: Upper, lower, number, and special char' };
         }
         return { isValid: true };
     },
@@ -31,24 +28,17 @@ class LoginForm extends FormUtils.LoginFormBase {
     constructor() {
         super({
             validators: formValidators,
-            // Keeps the footer and SSO buttons hidden when success message appears
             hideOnSuccess: ['.sso-options', '.footer-links'],
         });
     }
 
     decorate() {
-        // Updated to handle only the Google provider
         document.querySelectorAll('.sso-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                let provider = 'Google';
-                if (btn.classList.contains('google-btn')) {
-                    provider = 'Google';
-                }
-                FormUtils.showNotification(`Connecting to ${provider}...`, 'info', this.form);
+                FormUtils.showNotification(`Connecting to Google...`, 'info', this.form);
             });
         });
 
-        // Ensure password toggle works if the base class doesn't handle it
         const toggleBtn = document.getElementById('passwordToggle');
         const passwordInput = document.getElementById('password');
         if (toggleBtn && passwordInput) {
@@ -61,5 +51,4 @@ class LoginForm extends FormUtils.LoginFormBase {
     }
 }
 
-// Initialize form on page load
 document.addEventListener('DOMContentLoaded', () => new LoginForm());
