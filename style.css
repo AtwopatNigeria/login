@@ -1,29 +1,258 @@
-/* Container for the small square logo and name side-by-side */
+/* --- Variables & Reset --- */
+:root {
+    --bg-color: #e0e5ec;
+    --text-color: #2d3436;
+    --primary-accent: #6366f1;
+    --error-red: #e74c3c;
+    --success-green: #22c55e;
+    /* Neumorphic Shadows */
+    --main-shadow: 20px 20px 60px #bebebe;
+    --light-shadow: -20px -20px 60px #ffffff;
+    --inset-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+/* --- Container & Card --- */
+.login-container {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+}
+
+.login-card {
+    background: var(--bg-color);
+    padding: 50px 40px;
+    border-radius: 40px;
+    box-shadow: var(--main-shadow), var(--light-shadow);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* --- Header & Logo Alignment --- */
+.login-header {
+    margin-bottom: 35px;
+}
+
 .header-branding {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-/* Force logo to stay small and square */
 .logo-tiny {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     object-fit: contain;
+    border-radius: 8px;
+    /* Small neumorphic pop for the logo icon itself */
+    box-shadow: 4px 4px 8px #bebebe, -4px -4px 8px #ffffff;
 }
 
-/* Style for the association text */
 .association-name {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 800;
-    margin: 0;
-    color: #1a1a1a;
-    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-color);
 }
 
-/* Success Message hidden by default */
+.login-header h2 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+.login-header p {
+    color: #636e72;
+    font-size: 0.95rem;
+}
+
+/* --- Form Groups & Neumorphic Inputs --- */
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.input-wrapper {
+    position: relative;
+    background: var(--bg-color);
+    border-radius: 15px;
+    box-shadow: var(--inset-shadow);
+    padding: 5px 15px;
+    transition: all 0.3s ease;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 20px 10px 10px 10px;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.input-wrapper label {
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #b2bec3;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+/* Floating Label Logic */
+.input-wrapper input:focus + label,
+.input-wrapper input.has-value + label {
+    top: 15px;
+    font-size: 0.75rem;
+    color: var(--primary-accent);
+}
+
+/* --- Password Toggle --- */
+.password-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.password-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    color: #b2bec3;
+}
+
+/* --- Errors --- */
+.error-message {
+    font-size: 0.8rem;
+    color: var(--error-red);
+    margin-top: 8px;
+    margin-left: 5px;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+/* --- Buttons --- */
+.login-btn {
+    width: 100%;
+    padding: 18px;
+    border-radius: 15px;
+    border: none;
+    background: var(--bg-color);
+    color: var(--primary-accent);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+}
+
+.login-btn:active {
+    box-shadow: inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff;
+    transform: scale(0.98);
+}
+
+/* --- SSO & Divider --- */
+.divider {
+    margin: 30px 0;
+    position: relative;
+    color: #b2bec3;
+    font-size: 0.85rem;
+}
+
+.divider::before, .divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background: #bebebe;
+}
+
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+.google-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: var(--bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+    margin-bottom: 30px;
+}
+
+/* --- Footer --- */
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 0.85rem;
+}
+
+.footer-link {
+    text-decoration: none;
+    color: #636e72;
+    transition: color 0.2s;
+}
+
+.footer-link:hover {
+    color: var(--primary-accent);
+}
+
+.separator {
+    color: #bebebe;
+}
+
+/* --- Success Message State --- */
 .success-message {
     display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.success-message.show {
+    display: flex;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--bg-color);
+    box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: var(--success-green);
+    margin-bottom: 20px;
 }
