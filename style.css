@@ -89,6 +89,33 @@ body {
     font-weight: 400;
 }
 
+/* Container to pull logo and text side-by-side */
+.company-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px; /* Space between logo and text */
+    margin-bottom: 20px;
+}
+
+/* Shrink the logo to a small square */
+.logo-img-small {
+    width: 40px;  /* Small square size */
+    height: 40px;
+    object-fit: contain; /* Ensures logo isn't distorted */
+    border-radius: 4px;  /* Optional: slight rounding for a cleaner look */
+}
+
+/* Style for the Association Name */
+.association-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+
 /* Form Group & Input Styles */
 .form-group {
     margin-bottom: 24px;
