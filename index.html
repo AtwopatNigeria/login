@@ -3,8 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+    <title>Corporate Login Form</title>
+    <meta name="description" content="Enterprise-grade login form with SSO buttons (Azure AD / Okta) and business-email validation.">
+    <meta name="author" content="Aigars Silkalns / Colorlib">
+    <link rel="canonical" href="https://puikinsh.github.io/login-forms/forms/corporate/">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%236366f1'/><text x='50' y='68' font-size='60' text-anchor='middle' fill='white' font-family='system-ui,sans-serif'>L</text></svg>">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Corporate Login Form">
+    <meta property="og:description" content="Enterprise-grade login form with SSO buttons (Azure AD / Okta) and business-email validation.">
+    <meta property="og:url" content="https://puikinsh.github.io/login-forms/forms/corporate/">
+    <meta property="og:image" content="https://puikinsh.github.io/login-forms/assets/screenshots/corporate.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Corporate Login Form">
+    <meta name="twitter:description" content="Enterprise-grade login form with SSO buttons (Azure AD / Okta) and business-email validation.">
+    <meta name="twitter:image" content="https://puikinsh.github.io/login-forms/assets/screenshots/corporate.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,19 +24,17 @@
         <div class="login-card">
             <div class="login-header">
                 <div class="company-logo">
-                    <!-- Referencing your provided file for the design aesthetic -->
                     <div class="logo-icon">🏢</div>
                 </div>
                 <h2>Welcome Back</h2>
-                <p>Please sign in to continue</p>
+                <p>Please sign in to your corporate account</p>
             </div>
             
             <form class="login-form" id="loginForm" novalidate>
                 <div class="form-group">
                     <div class="input-wrapper">
                         <input type="email" id="email" name="email" required autocomplete="email">
-                        <!-- Changed label to avoid "Business" restriction intent -->
-                        <label for="email">Email Address</label>
+                        <label for="email">Business Email</label>
                         <span class="input-border"></span>
                     </div>
                     <span class="error-message" id="emailError"></span>
@@ -64,10 +74,13 @@
             </div>
 
             <div class="sso-options">
-                <!-- Kept only Google as requested -->
-                <button type="button" class="sso-btn google-btn">
-                    <span class="sso-icon google-icon"></span>
-                    <span>Google</span>
+                <button type="button" class="sso-btn azure-btn">
+                    <span class="sso-icon azure-icon"></span>
+                    <span>Microsoft Azure AD</span>
+                </button>
+                <button type="button" class="sso-btn okta-btn">
+                    <span class="sso-icon okta-icon"></span>
+                    <span>Okta</span>
                 </button>
             </div>
 
@@ -82,12 +95,11 @@
             <div class="success-message" id="successMessage">
                 <div class="success-icon">✓</div>
                 <h3>Authentication Successful</h3>
-                <p>Redirecting to your dashboard...</p>
+                <p>Redirecting to your workspace...</p>
             </div>
         </div>
     </div>
 
-    <!-- Neumorphic styling often relies on these external assets -->
     <script src="../../shared/js/form-utils.js"></script>
     <script src="script.js"></script>
 </body>
