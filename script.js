@@ -1,25 +1,25 @@
-// Corporate Login Form
-const corporateValidators = {
+const formValidators = {
     email: (value) => {
-        if (!value) return { isValid: false, message: 'Business email is required' };
-        const businessEmailRegex = /^[^\s@]+@[^\s@]+\.(com|org|net|edu|gov|mil)$/i;
-        if (!businessEmailRegex.test(value)) {
-            return { isValid: false, message: 'Please enter a valid business email address' };
+        if (!value) return { isValid: false, message: 'Email address is required' };
+        
+        // Standard email regex (allows gmail, outlook, etc.)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            return { isValid: false, message: 'Please enter a valid email address' };
         }
-        const personalDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'];
-        const domain = value.split('@')[1]?.toLowerCase();
-        if (personalDomains.includes(domain)) {
-            return { isValid: false, message: 'Please use your business email address' };
-        }
+        
+        // Restriction for personal domains (gmail, yahoo, etc.) has been removed
         return { isValid: true };
     },
     password: (value) => {
         if (!value) return { isValid: false, message: 'Password is required' };
         if (value.length < 8) return { isValid: false, message: 'Password must be at least 8 characters' };
+        
         const hasUpperCase = /[A-Z]/.test(value);
         const hasLowerCase = /[a-z]/.test(value);
         const hasNumbers = /\d/.test(value);
         const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+        
         if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecial) {
             return { isValid: false, message: 'Password must contain uppercase, lowercase, number, and special character' };
         }
@@ -27,22 +27,39 @@ const corporateValidators = {
     },
 };
 
-class CorporateLoginForm extends FormUtils.LoginFormBase {
+class LoginForm extends FormUtils.LoginFormBase {
     constructor() {
         super({
-            validators: corporateValidators,
+            validators: formValidators,
+            // Keeps the footer and SSO buttons hidden when success message appears
             hideOnSuccess: ['.sso-options', '.footer-links'],
         });
     }
 
     decorate() {
+        // Updated to handle only the Google provider
         document.querySelectorAll('.sso-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                const provider = btn.classList.contains('azure-btn') ? 'Azure AD' : 'Okta';
+                let provider = 'Google';
+                if (btn.classList.contains('google-btn')) {
+                    provider = 'Google';
+                }
                 FormUtils.showNotification(`Connecting to ${provider}...`, 'info', this.form);
             });
         });
+
+        // Ensure password toggle works if the base class doesn't handle it
+        const toggleBtn = document.getElementById('passwordToggle');
+        const passwordInput = document.getElementById('password');
+        if (toggleBtn && passwordInput) {
+            toggleBtn.addEventListener('click', () => {
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+                toggleBtn.classList.toggle('visible');
+            });
+        }
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => new CorporateLoginForm());
+// Initialize form on page load
+document.addEventListener('DOMContentLoaded', () => new LoginForm());
